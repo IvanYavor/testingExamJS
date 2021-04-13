@@ -1,3 +1,4 @@
+const { ClassificationTypeNames } = require("typescript");
 const {
   isNumeric,
   extractFistNumber,
@@ -6,8 +7,6 @@ const {
   extractEqualityOperator,
   parseCalc,
   calculateString,
-  readExpressionFromFile,
-  writeResultToFile,
 } = require("./game");
 
 describe("test extractFirstNum", () => {
@@ -125,5 +124,63 @@ describe("test calculateString", () => {
     const output = 144;
 
     expect(calculateString(firstNum, operator, secondNum)).toEqual(output);
+  });
+});
+
+describe("test parseCalc", () => {
+  test("pass empty string", () => {
+    const input = "";
+    const output = 0;
+
+    expect(parseCalc(input)).toEqual(output);
+  });
+
+  test("pass string with first number only", () => {
+    const input = "13";
+    const output = 13;
+
+    expect(parseCalc(input)).toEqual(output);
+  });
+
+  test("pass string with first number and operator", () => {
+    const input = "13+";
+    const output = 13;
+
+    expect(parseCalc(input)).toEqual(output);
+  });
+
+  test("pass string with first number, operator and second number", () => {
+    const input = "13+12";
+    const output = 12;
+
+    expect(parseCalc(input)).toEqual(output);
+  });
+
+  test("pass full valid string with sum", () => {
+    const input = "13+12=";
+    const output = 25;
+
+    expect(parseCalc(input)).toEqual(output);
+  });
+
+  test("pass full valid string with substraction", () => {
+    const input = "13-12=";
+    const output = 1;
+
+    expect(parseCalc(input)).toEqual(output);
+  });
+
+  test("pass full valid string with division", () => {
+    const input = "13/12=";
+    const output = 1;
+
+    expect(parseCalc(input)).toEqual(output);
+  });
+
+  test("pass full valid string with multiplication", () => {
+    const input = "3*3=";
+    const output = 9;
+
+    expect(parseCalc(input)).toEqual(output);
   });
 });
